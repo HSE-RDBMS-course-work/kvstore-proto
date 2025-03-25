@@ -1,10 +1,15 @@
+//todo create go.mod in root
+//todo create dev container for generating pb
+//todo create go submodule in gen/go
+//todo try to create package for another lang
+
 syntax = "proto3";
 
 package kvstore;
 
 import "google/protobuf/empty.proto";
 
-option go_package = "kvstore.v1;kvstore_v1"; //todo
+option go_package = "kvstore.v1;kvstore_v1"; //todo naming
 
 service KVStore {
   rpc Get (GetIn) returns (GetOut);
