@@ -4,12 +4,11 @@
 // 	protoc        v3.21.12
 // source: raft.proto
 
-package kvstore_v1
+package pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -74,17 +73,54 @@ func (x *JoinIn) GetNodeAddr() string {
 	return ""
 }
 
+type JoinOut struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *JoinOut) Reset() {
+	*x = JoinOut{}
+	mi := &file_raft_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *JoinOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*JoinOut) ProtoMessage() {}
+
+func (x *JoinOut) ProtoReflect() protoreflect.Message {
+	mi := &file_raft_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use JoinOut.ProtoReflect.Descriptor instead.
+func (*JoinOut) Descriptor() ([]byte, []int) {
+	return file_raft_proto_rawDescGZIP(), []int{1}
+}
+
 var File_raft_proto protoreflect.FileDescriptor
 
 const file_raft_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"raft.proto\x12\akvstore\x1a\x1bgoogle/protobuf/empty.proto\"<\n" +
+	"raft.proto\x12\akvstore\"<\n" +
 	"\x06JoinIn\x12\x16\n" +
 	"\x06nodeID\x18\x01 \x01(\tR\x06nodeID\x12\x1a\n" +
-	"\bnodeAddr\x18\x02 \x01(\tR\bnodeAddr27\n" +
-	"\x04Raft\x12/\n" +
-	"\x04Join\x12\x0f.kvstore.JoinIn\x1a\x16.google.protobuf.EmptyB\x17Z\x15kvstore.v1;kvstore_v1b\x06proto3"
+	"\bnodeAddr\x18\x02 \x01(\tR\bnodeAddr\"\t\n" +
+	"\aJoinOut21\n" +
+	"\x04Raft\x12)\n" +
+	"\x04Join\x12\x0f.kvstore.JoinIn\x1a\x10.kvstore.JoinOutB\x0fZ\rkvstore/pb;pbb\x06proto3"
 
 var (
 	file_raft_proto_rawDescOnce sync.Once
@@ -98,14 +134,14 @@ func file_raft_proto_rawDescGZIP() []byte {
 	return file_raft_proto_rawDescData
 }
 
-var file_raft_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_raft_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_raft_proto_goTypes = []any{
-	(*JoinIn)(nil),        // 0: kvstore.JoinIn
-	(*emptypb.Empty)(nil), // 1: google.protobuf.Empty
+	(*JoinIn)(nil),  // 0: kvstore.JoinIn
+	(*JoinOut)(nil), // 1: kvstore.JoinOut
 }
 var file_raft_proto_depIdxs = []int32{
 	0, // 0: kvstore.Raft.Join:input_type -> kvstore.JoinIn
-	1, // 1: kvstore.Raft.Join:output_type -> google.protobuf.Empty
+	1, // 1: kvstore.Raft.Join:output_type -> kvstore.JoinOut
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -124,7 +160,7 @@ func file_raft_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_raft_proto_rawDesc), len(file_raft_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

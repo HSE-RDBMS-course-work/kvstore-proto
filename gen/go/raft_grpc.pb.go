@@ -4,14 +4,13 @@
 // - protoc             v3.21.12
 // source: raft.proto
 
-package kvstore_v1
+package pb
 
 import (
 	context "context"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -27,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RaftClient interface {
-	Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*JoinOut, error)
 }
 
 type raftClient struct {
@@ -38,9 +37,9 @@ func NewRaftClient(cc grpc.ClientConnInterface) RaftClient {
 	return &raftClient{cc}
 }
 
-func (c *raftClient) Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *raftClient) Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*JoinOut, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(JoinOut)
 	err := c.cc.Invoke(ctx, Raft_Join_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -52,7 +51,7 @@ func (c *raftClient) Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOpti
 // All implementations must embed UnimplementedRaftServer
 // for forward compatibility.
 type RaftServer interface {
-	Join(context.Context, *JoinIn) (*emptypb.Empty, error)
+	Join(context.Context, *JoinIn) (*JoinOut, error)
 	mustEmbedUnimplementedRaftServer()
 }
 
@@ -63,7 +62,7 @@ type RaftServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRaftServer struct{}
 
-func (UnimplementedRaftServer) Join(context.Context, *JoinIn) (*emptypb.Empty, error) {
+func (UnimplementedRaftServer) Join(context.Context, *JoinIn) (*JoinOut, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
 }
 func (UnimplementedRaftServer) mustEmbedUnimplementedRaftServer() {}

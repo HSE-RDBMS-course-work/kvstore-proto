@@ -6,13 +6,13 @@ option go_package = "kvstore/pb;pb";
 
 service KVStore {
   rpc Get (GetIn) returns (GetOut);
+  rpc ConsistentGet(GetIn) returns (GetOut);
   rpc Put (PutIn) returns (PutOut);
   rpc Delete (DeleteIn) returns (DeleteOut);
 }
 
 message GetIn {
   string key = 1;
-  bool consistent = 2;
 }
 
 message GetOut {
