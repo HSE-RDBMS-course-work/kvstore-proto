@@ -1,4 +1,4 @@
-module github.com/HSE-RDBMS-course-work/kvstore-proto
+module github.com/HSE-RDBMS-course-work/kvstore-proto/v2
 
 go 1.24.0
 

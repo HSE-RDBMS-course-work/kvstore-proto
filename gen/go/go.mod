@@ -1,4 +1,4 @@
-module github.com/HSE-RDBMS-course-work/kvstore-proto/gen/go
+module github.com/HSE-RDBMS-course-work/kvstore-proto/v2/gen/go
 
 go 1.24.2
 
