@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package kvstore;
 
-import "google/protobuf/empty.proto";
-
-option go_package = "kvstore.v1;kvstore_v1";
+option go_package = "kvstore/pb;pb";
 
 service Raft {
-  rpc Join (JoinIn) returns (google.protobuf.Empty);
+  rpc Join (JoinIn) returns (JoinOut);
 }
 
 message JoinIn {
   string nodeID = 1;
   string nodeAddr = 2;
 }
+
+message JoinOut {}

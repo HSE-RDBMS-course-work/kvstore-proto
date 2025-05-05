@@ -1,24 +1,18 @@
-//todo create go.mod in root
-//todo create dev container for generating pb
-//todo create go submodule in gen/go
-//todo try to create package for another lang
-
-syntax = "proto3";
+syntax = "proto3"; //todo create dev container for generating pb
 
 package kvstore;
 
-import "google/protobuf/empty.proto";
-
-option go_package = "kvstore.v1;kvstore_v1"; //todo naming
+option go_package = "kvstore/pb;pb";
 
 service KVStore {
   rpc Get (GetIn) returns (GetOut);
-  rpc Put (PutIn) returns (google.protobuf.Empty);
-  rpc Delete (DeleteIn) returns (google.protobuf.Empty);
+  rpc Put (PutIn) returns (PutOut);
+  rpc Delete (DeleteIn) returns (DeleteOut);
 }
 
 message GetIn {
   string key = 1;
+  bool consistent = 2;
 }
 
 message GetOut {
@@ -28,8 +22,13 @@ message GetOut {
 message PutIn {
   string key = 1;
   string value = 2;
+  int64 ttl = 3;
 }
+
+message PutOut {}
 
 message DeleteIn {
   string key = 1;
 }
+
+message DeleteOut {}
