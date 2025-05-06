@@ -5,12 +5,12 @@ package kvstore;
 option go_package = "kvstore/pb;pb";
 
 service Raft {
-  rpc Join (JoinIn) returns (JoinOut);
+  rpc JoinToCluster (JoinIn) returns (JoinOut);
 }
 
 message JoinIn {
-  string nodeID = 1;
-  string nodeAddr = 2;
+  string joiner_id = 1;
+  string joiner_address = 2;
 }
 
 message JoinOut {}

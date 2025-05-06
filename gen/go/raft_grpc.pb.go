@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Raft_Join_FullMethodName = "/kvstore.Raft/Join"
+	Raft_JoinToCluster_FullMethodName = "/kvstore.Raft/JoinToCluster"
 )
 
 // RaftClient is the client API for Raft service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RaftClient interface {
-	Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*JoinOut, error)
+	JoinToCluster(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*JoinOut, error)
 }
 
 type raftClient struct {
@@ -37,10 +37,10 @@ func NewRaftClient(cc grpc.ClientConnInterface) RaftClient {
 	return &raftClient{cc}
 }
 
-func (c *raftClient) Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*JoinOut, error) {
+func (c *raftClient) JoinToCluster(ctx context.Context, in *JoinIn, opts ...grpc.CallOption) (*JoinOut, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(JoinOut)
-	err := c.cc.Invoke(ctx, Raft_Join_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Raft_JoinToCluster_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *raftClient) Join(ctx context.Context, in *JoinIn, opts ...grpc.CallOpti
 // All implementations must embed UnimplementedRaftServer
 // for forward compatibility.
 type RaftServer interface {
-	Join(context.Context, *JoinIn) (*JoinOut, error)
+	JoinToCluster(context.Context, *JoinIn) (*JoinOut, error)
 	mustEmbedUnimplementedRaftServer()
 }
 
@@ -62,8 +62,8 @@ type RaftServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRaftServer struct{}
 
-func (UnimplementedRaftServer) Join(context.Context, *JoinIn) (*JoinOut, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
+func (UnimplementedRaftServer) JoinToCluster(context.Context, *JoinIn) (*JoinOut, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JoinToCluster not implemented")
 }
 func (UnimplementedRaftServer) mustEmbedUnimplementedRaftServer() {}
 func (UnimplementedRaftServer) testEmbeddedByValue()              {}
@@ -86,20 +86,20 @@ func RegisterRaftServer(s grpc.ServiceRegistrar, srv RaftServer) {
 	s.RegisterService(&Raft_ServiceDesc, srv)
 }
 
-func _Raft_Join_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Raft_JoinToCluster_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(JoinIn)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RaftServer).Join(ctx, in)
+		return srv.(RaftServer).JoinToCluster(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Raft_Join_FullMethodName,
+		FullMethod: Raft_JoinToCluster_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RaftServer).Join(ctx, req.(*JoinIn))
+		return srv.(RaftServer).JoinToCluster(ctx, req.(*JoinIn))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var Raft_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RaftServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Join",
-			Handler:    _Raft_Join_Handler,
+			MethodName: "JoinToCluster",
+			Handler:    _Raft_JoinToCluster_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

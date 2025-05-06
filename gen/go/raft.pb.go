@@ -23,8 +23,8 @@ const (
 
 type JoinIn struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	NodeID        string                 `protobuf:"bytes,1,opt,name=nodeID,proto3" json:"nodeID,omitempty"`
-	NodeAddr      string                 `protobuf:"bytes,2,opt,name=nodeAddr,proto3" json:"nodeAddr,omitempty"`
+	JoinerId      string                 `protobuf:"bytes,1,opt,name=joiner_id,json=joinerId,proto3" json:"joiner_id,omitempty"`
+	JoinerAddress string                 `protobuf:"bytes,2,opt,name=joiner_address,json=joinerAddress,proto3" json:"joiner_address,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,16 +59,16 @@ func (*JoinIn) Descriptor() ([]byte, []int) {
 	return file_raft_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *JoinIn) GetNodeID() string {
+func (x *JoinIn) GetJoinerId() string {
 	if x != nil {
-		return x.NodeID
+		return x.JoinerId
 	}
 	return ""
 }
 
-func (x *JoinIn) GetNodeAddr() string {
+func (x *JoinIn) GetJoinerAddress() string {
 	if x != nil {
-		return x.NodeAddr
+		return x.JoinerAddress
 	}
 	return ""
 }
@@ -114,13 +114,13 @@ var File_raft_proto protoreflect.FileDescriptor
 const file_raft_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"raft.proto\x12\akvstore\"<\n" +
-	"\x06JoinIn\x12\x16\n" +
-	"\x06nodeID\x18\x01 \x01(\tR\x06nodeID\x12\x1a\n" +
-	"\bnodeAddr\x18\x02 \x01(\tR\bnodeAddr\"\t\n" +
-	"\aJoinOut21\n" +
-	"\x04Raft\x12)\n" +
-	"\x04Join\x12\x0f.kvstore.JoinIn\x1a\x10.kvstore.JoinOutB\x0fZ\rkvstore/pb;pbb\x06proto3"
+	"raft.proto\x12\akvstore\"L\n" +
+	"\x06JoinIn\x12\x1b\n" +
+	"\tjoiner_id\x18\x01 \x01(\tR\bjoinerId\x12%\n" +
+	"\x0ejoiner_address\x18\x02 \x01(\tR\rjoinerAddress\"\t\n" +
+	"\aJoinOut2:\n" +
+	"\x04Raft\x122\n" +
+	"\rJoinToCluster\x12\x0f.kvstore.JoinIn\x1a\x10.kvstore.JoinOutB\x0fZ\rkvstore/pb;pbb\x06proto3"
 
 var (
 	file_raft_proto_rawDescOnce sync.Once
@@ -140,8 +140,8 @@ var file_raft_proto_goTypes = []any{
 	(*JoinOut)(nil), // 1: kvstore.JoinOut
 }
 var file_raft_proto_depIdxs = []int32{
-	0, // 0: kvstore.Raft.Join:input_type -> kvstore.JoinIn
-	1, // 1: kvstore.Raft.Join:output_type -> kvstore.JoinOut
+	0, // 0: kvstore.Raft.JoinToCluster:input_type -> kvstore.JoinIn
+	1, // 1: kvstore.Raft.JoinToCluster:output_type -> kvstore.JoinOut
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
